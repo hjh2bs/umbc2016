@@ -93,9 +93,6 @@
                     speedKbps + " kbps", 
                     speedMbps + " Mbps"
                 ]);
-
-                alert(lati);
-                alert(longi);
                 var ref = new Firebase('https://hackumbc.firebaseio.com/');
                 var newPost = ref.push();
                     newPost.set({speed: speedMbps, latitude: lati, longitude: longi});
