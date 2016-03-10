@@ -2,109 +2,54 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
-    <title>Python-jQuery Example</title>
+    <title></title>
     <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <link type="text/css" rel="stylesheet" href="homepage.css"> 
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
 </head>
-<body>
-    <h1 id="progress">JavaScript is turned off, or your browser is realllllly slow</h1>
-</body>
+
+<script src = "background.js">
+</script>
+
+<body class="homepage" onclick='window.location.href="maps.html"'>
+
+    <div>
+        <h1 id="title"> Hello. </h1>
+    </div>
+
     <script>
+        setInterval(function(){
 
-        //JUST AN EXAMPLE, PLEASE USE YOUR OWN PICTURE!
-        var imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg"; 
-        var downloadSize = 4995374; //bytes
+        	if(internetSpeed != undefined && internetSpeed != null){
+        		if(internetSpeed < 0){
+        			internetSpeed = internetSpeed*-1;
+        		}
 
-        function ShowProgressMessage(msg) {
-            if (console) {
-                if (typeof msg == "string") {
-                    console.log(msg);
-                } else {
-                    for (var i = 0; i < msg.length; i++) {
-                        console.log(msg[i]);
-                    }
-                }
-            }
-            
-            var oProgress = document.getElementById("progress");
-            if (oProgress) {
-                var actualHTML = (typeof msg == "string") ? msg : msg.join("<br />");
-                oProgress.innerHTML = actualHTML;
-            }
-        }
+            	document.getElementById("title").innerHTML = "Hello. <br> <br> Your internet speed <br> is " + internetSpeed + "Mbps.";
 
-        function InitiateSpeedDetection() {
-            ShowProgressMessage("Loading the image, please wait...");
-            window.setTimeout(MeasureConnectionSpeed, 1);
-        };    
-
-        if (window.addEventListener) {
-            window.addEventListener('load', InitiateSpeedDetection, false);
-        } else if (window.attachEvent) {
-            window.attachEvent('onload', InitiateSpeedDetection);
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(MeasureConnectionSpeed);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-        // function setPosition(position) {
-        //     latitude = position.coords.latitude;
-        //     longitude = position.coords.longitude;
-
-        //     alert(latitude);
-        //     alert(longitude);
-        //     // x.innerHTML = "Latitude: " + position.coords.latitude + 
-        //     // "<br>Longitude: " + position.coords.longitude; 
-        // }
-
-        function MeasureConnectionSpeed(position) {
-            var startTime, endTime;
-            var download = new Image();
-            download.onload = function () {
-                endTime = (new Date()).getTime();
-                showResults();
-            }
-            
-            download.onerror = function (err, msg) {
-                ShowProgressMessage("Invalid image, or error downloading");
-            }
-            
-            startTime = (new Date()).getTime();
-            var cacheBuster = "?nnn=" + startTime;
-            download.src = imageAddr + cacheBuster;
-            
-            function showResults() {
-                getLocation();
-                lati = position.coords.latitude;
-                longi = position.coords.longitude;
-
-                var duration = (endTime - startTime) / 1000;
-                var bitsLoaded = downloadSize * 8;
-                var speedBps = (bitsLoaded / duration).toFixed(2);
-                var speedKbps = (speedBps / 1024).toFixed(2);
-                var speedMbps = (speedKbps / 1024).toFixed(2);
-                ShowProgressMessage([
-                    "Your connection speed is:", 
-                    speedBps + " bps", 
-                    speedKbps + " kbps", 
-                    speedMbps + " Mbps"
-                ]);
-                var ref = new Firebase('https://hackumbc.firebaseio.com/');
-                var newPost = ref.push();
-                    newPost.set({speed: speedMbps, latitude: lati, longitude: longi});
-
-
-            }
-        }
-
-
-
-
-
+				var bgImgs = ['url("background.jpg")', 'url("background1.jpg")', 'url("background2.jpg")', 'url("background3.jpg")', 'url("background4.jpg")', 'url("background5.jpg")'];
+				var random = bgImgs[Math.floor(Math.random() * bgImgs.length)];
+				document.body.style.backgroundImage = random;
+        	}
+        },20000); 
     </script>
+</body>
+
+<script>
+	var bgImgs = ['url("background.jpg")', 'url("background1.jpg")', 'url("background2.jpg")', 'url("background3.jpg")', 'url("background4.jpg")', 'url("background5.jpg")'];
+	var random = bgImgs[Math.floor(Math.random() * bgImgs.length)];
+	document.body.style.backgroundImage = random;
+
+</script>
+
+<!-- <body>
+    <h1 id="progress">JavaScript is turned off, or your browser is realllllly slow</h1>
+</body> -->
+
+
+
 
 </html>
